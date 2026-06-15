@@ -49,16 +49,16 @@ function AdminDashboard() {
       {error && <Error error={error} setError = {setError}/>}
 
       { (
-        <div className="flex">
+        <div className="flex flex-col h-full">
           <Sidebar hamburgerIcon={hamburgerIcon} />
 
-          <div className="flex flex-col w-full max-w-full">
+          <div className="flex flex-col w-full max-w-full h-full">
             <Header
               hamburgerIcon={hamburgerIcon}
               setHamburgerIcon={setHamburgerIcon}
             />
 
-            <div className="main px-4 py-3 flex gap-3 flex-col bg-gray-50 mt-1">
+            <div className="main px-4 py-3 flex gap-3 flex-col bg-gray-50 mt-1 h-full">
               <h2 className="font-semibold text-gray-900 py-3">
                 Dashboard
               </h2>

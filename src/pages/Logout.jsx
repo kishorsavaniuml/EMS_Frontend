@@ -14,16 +14,16 @@ function Logout() {
 
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <div className="flex">
+      <div className="flex h-full">
         <Sidebar hamburgerIcon={hamburgerIcon} />
 
-        <div className="w-full">
+        <div className="w-full flex flex-col h-full">
           <Header
             hamburgerIcon={hamburgerIcon}
             setHamburgerIcon={setHamburgerIcon}
           />
 
-          <div className="bg-gray-50 h-[calc(100vh-64px)] flex items-center justify-center mt-1">
+          <div className="bg-gray-50  flex items-center justify-center mt-1 flex-1 min-h-0">
             <div className="bg-white w-[450px] rounded-2xl border border-gray-200 shadow-sm p-10">
               
               <div className="flex justify-center">
