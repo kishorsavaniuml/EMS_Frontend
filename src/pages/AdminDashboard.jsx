@@ -58,7 +58,7 @@ function AdminDashboard() {
               setHamburgerIcon={setHamburgerIcon}
             />
 
-            <div className="main px-4 py-3 flex gap-3 flex-col bg-gray-50 mt-1 h-full">
+            <div className="main px-4 py-3 flex gap-3 flex-col bg-gray-50 mt-1 h-full flex-1">
               <h2 className="font-semibold text-gray-900 py-3">
                 Dashboard
               </h2>
