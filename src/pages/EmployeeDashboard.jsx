@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-import Sidebar from "../components/sidebar/Sidebar";
-import Header from "../components/Header";
+// import Sidebar from "../components/sidebar/Sidebar";
+// import Header from "../components/Header";
 import Error from "../components/Error";
 import { employeeCardData } from "../data/employeeCardData";
 import EmployeeDashboardCard from "../components/EmployeeDashboardCard";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AdminLayOut from "../components/AdminLayOut";
 
 function EmployeeDashboard() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function EmployeeDashboard() {
   });
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
-  const [hamburgerIcon, setHamburgerIcon] = useState(true);
+  // const [hamburgerIcon, setHamburgerIcon] = useState(true);
 
   useEffect(() => {
     const fetchEmployeeDashboardData = async () => {
@@ -112,9 +113,109 @@ function EmployeeDashboard() {
 
   return (
     <div className="w-screen h-screen overflow-hidden  bg-gray-50 ">
-      {error && <Error error={error}  setError = {setError} />}
-      {loader && <Loader />}
-      { (
+      {error && <Error error={error} setError={setError} />}
+
+      <AdminLayOut>
+        <div className="h-full flex-1">
+          {loader && <Loader />}
+          <div className="main px-8 py-3 flex flex-col mt-1 ">
+            <h1 className=" capitalize">{`Welcome , ${employeeDashboardData.userName}`}</h1>
+
+            <div className="flex justify-evenly flex-1 p-3">
+              {employeeCardData.map((card) => {
+                return (
+                  <EmployeeDashboardCard
+                    key={card.employeeDashboardCardKey}
+                    employeeCardData={card}
+                    employeeDashboardData={employeeDashboardData}
+                  />
+                );
+              })}
+            </div>
+            <div>
+              <div className="pb-3">Recent Leaves</div>
+              <div className="bg-white p-5 w-9/10 mx-auto mt-1 rounded-2xl border border-gray-200 shadow shadow-gray-200">
+                <table className="w-full">
+                  <thead className="text-center">
+                    <tr className="border-b border-gray-100">
+                      <th className="w-1/5 py-1">Requested Date</th>
+                      <th className="w-1/5">From Date</th>
+                      <th className="w-1/5">To Date</th>
+                      <th className="w-1/5">Reason</th>
+                      <th className="w-1/5">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-center">
+                    {employeeDashboardData.recentLeaves.map((leave) => {
+                      return (
+                        <tr
+                          className="border-b border-gray-100"
+                          key={leave._id}
+                        >
+                          <td className="py-1">
+                            {new Date(leave.requestDate).toLocaleDateString(
+                              "en-IN",
+                              {
+                                month: "2-digit",
+                                day: "2-digit",
+                                year: "numeric",
+                              },
+                            )}
+                          </td>
+                          <td>
+                            {new Date(leave.leaveStartDate).toLocaleDateString(
+                              "en-IN",
+                              {
+                                month: "2-digit",
+                                day: "2-digit",
+                                year: "numeric",
+                              },
+                            )}
+                          </td>
+                          <td>
+                            {new Date(leave.leaveEndDate).toLocaleDateString(
+                              "en-IN",
+                              {
+                                month: "2-digit",
+                                day: "2-digit",
+                                year: "numeric",
+                              },
+                            )}
+                          </td>
+                          <td className=" capitalize">{leave.reason}</td>
+                          <td className=" capitalize">
+                            {" "}
+                            <span
+                              className={
+                                leave.status == "pending"
+                                  ? "bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full inline-block min-w-24"
+                                  : leave.status == "approved"
+                                    ? "bg-green-100 text-green-800 px-2 py-0.5 rounded-full inline-block min-w-24"
+                                    : "bg-red-100 text-red-800 px-2 py-0.5 rounded-full inline-block min-w-24"
+                              }
+                            >
+                              {leave.status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <div className="flex justify-center pt-5 px-10">
+                  <button
+                    onClick={() => navigate("/my-leaves")}
+                    className="text-blue-400 cursor-pointer px-1"
+                  >
+                    View All
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AdminLayOut>
+      {/* { (
         <div className="flex">
           <Sidebar hamburgerIcon={hamburgerIcon} />
 
@@ -221,7 +322,7 @@ function EmployeeDashboard() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
